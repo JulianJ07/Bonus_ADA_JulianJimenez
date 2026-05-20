@@ -10,6 +10,11 @@ Este proyecto implementa un mini modelo de resumen siguiendo la guia del PDF:
 6. Puntua palabras y oraciones.
 7. Muestra un resumen con las oraciones mas importantes.
 
+## Manual de usuario
+
+Las instrucciones completas para acceder, instalar, ejecutar y usar el programa
+estan en [MANUAL_USUARIO.md](MANUAL_USUARIO.md).
+
 ## Probar con vista web
 
 Instala las dependencias:
