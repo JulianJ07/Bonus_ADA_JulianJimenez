@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mini Modelo LLM - Resumen</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <main class="app-shell">
+        <section class="intro">
+            <div>
+                <p class="eyebrow">Mini Modelo LLM</p>
+                <h1>Resumen de texto</h1>
+            </div>
+            <p class="intro-copy">
+                Pega un texto, elige la longitud y genera un resumen con las ideas mas importantes.
+            </p>
+        </section>
+
+        <section class="workspace" aria-label="Generador de resumen">
+            <form class="input-panel" method="post">
+                <div class="field-group">
+                    <label for="texto">Texto original</label>
+                    <textarea
+                        id="texto"
+                        name="texto"
+                        rows="14"
+                        placeholder="Escribe o pega aqui el texto que quieres resumir..."
+                    >{{ texto }}</textarea>
+                </div>
+
+                <div class="controls">
+                    <label class="number-field" for="cantidad_oraciones">
+                        Oraciones
+                        <input
+                            id="cantidad_oraciones"
+                            name="cantidad_oraciones"
+                            type="number"
+                            min="1"
+                            max="8"
+                            value="{{ cantidad_oraciones }}"
+                        >
+                    </label>
+
+                    <div class="actions">
+                        <button class="secondary-button" type="submit" name="accion" value="ejemplo">
+                            Cargar ejemplo
+                        </button>
+                        <button class="primary-button" type="submit" name="accion" value="resumir">
+                            Generar resumen
+                        </button>
+                    </div>
+                </div>
+
+                {% if error %}
+                    <p class="alert" role="alert">{{ error }}</p>
+                {% endif %}
+            </form>
+
+            <section class="output-panel" aria-live="polite">
+                {% if tiene_resultados %}
+                    <div class="result-section">
+                        <p class="section-label">Resumen</p>
+                        <ol class="summary-list">
+                            {% for oracion in resumen %}
+                                <li>{{ oracion }}</li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+
+                    <div class="result-section">
+                        <p class="section-label">Palabras importantes</p>
+                        <div class="keywords">
+                            {% for palabra, puntaje in palabras_importantes %}
+                                <span class="keyword">{{ palabra }} <strong>{{ puntaje }}</strong></span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="result-section">
+                        <p class="section-label">Grafo de relaciones</p>
+                        <div class="graph-list">
+                            {% for nodo in grafo_visible %}
+                                <article class="graph-item">
+                                    <h2>{{ nodo.palabra }}</h2>
+                                    <p>
+                                        {% if nodo.conexiones %}
+                                            {{ nodo.conexiones | join(", ") }}
+                                        {% else %}
+                                            Sin conexiones
+                                        {% endif %}
+                                    </p>
+                                </article>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="empty-state">
+                        <p class="section-label">Resultado</p>
+                        <h2>Tu resumen aparecera aqui</h2>
+                        <p>
+                            El modelo limpiara el texto, quitara palabras vacias, calculara frecuencias
+                            y elegira las oraciones con mejor puntaje.
+                        </p>
+                    </div>
+                {% endif %}
+            </section>
+        </section>
+    </main>
+</body>
+</html>

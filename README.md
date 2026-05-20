@@ -10,7 +10,37 @@ Este proyecto implementa un mini modelo de resumen siguiendo la guia del PDF:
 6. Puntua palabras y oraciones.
 7. Muestra un resumen con las oraciones mas importantes.
 
-## Ejecutar
+## Probar con vista web
+
+Instala las dependencias:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+Ejecuta la aplicacion:
+
+```bash
+python app.py
+```
+
+Abre esta direccion en el navegador:
+
+```text
+http://127.0.0.1:5000
+```
+
+Si en Windows `python` no funciona, prueba con `py`:
+
+```bash
+py -m pip install -r requirements.txt
+py app.py
+```
+
+En la vista puedes pegar un texto, elegir cuantas oraciones quieres en el
+resumen y ver las palabras mas importantes junto con el grafo de relaciones.
+
+## Probar en consola
 
 ```bash
 python mini_modelo_resumen.py
